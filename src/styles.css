@@ -1,0 +1,545 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-logo: "Grand Hotel", cursive;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand-pink: oklch(0.68 0.24 0);
+  --color-brand-rose: oklch(0.65 0.24 20);
+  --color-brand-amber: oklch(0.82 0.18 80);
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Instagram dark aesthetic - slate-950 base */
+  --background: oklch(0.18 0.03 260);
+  --foreground: oklch(0.98 0.003 250);
+  --card: oklch(0.24 0.03 260);
+  --card-foreground: oklch(0.98 0.003 250);
+  --popover: oklch(0.22 0.03 260);
+  --popover-foreground: oklch(0.98 0.003 250);
+  --primary: oklch(0.68 0.24 0);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.3 0.03 260);
+  --secondary-foreground: oklch(0.98 0.003 250);
+  --muted: oklch(0.28 0.03 260);
+  --muted-foreground: oklch(0.7 0.02 255);
+  --accent: oklch(0.3 0.05 320);
+  --accent-foreground: oklch(0.98 0.003 250);
+  --destructive: oklch(0.65 0.24 20);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.32 0.03 260);
+  --input: oklch(0.28 0.03 260);
+  --ring: oklch(0.68 0.24 0);
+}
+
+@layer base {
+  html,
+  body {
+    background-color: #000000;
+    color: #f8fafc;
+    font-family: var(--font-sans);
+  }
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@utility font-logo {
+  font-family: "Grand Hotel", cursive;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility story-ring {
+  background: linear-gradient(
+    135deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
+
+@utility glass-card {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@utility glass-nav {
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+@utility ig-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes heartPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(-15deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8) rotate(10deg);
+    opacity: 0;
+  }
+}
+.animate-heart-pop {
+  animation: heartPop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* ============================================================
+   Light mode: automatic (system) or user-toggled via <html class="light">.
+   Maps the app's dark slate palette onto a clean white surface.
+   ============================================================ */
+html.light,
+html.light body {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+html.light .bg-slate-950,
+html.light .bg-slate-950\/95,
+html.light .bg-slate-950\/90 {
+  background-color: #ffffff;
+}
+html.light .bg-slate-900,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-800,
+html.light .bg-slate-800\/60,
+html.light .bg-slate-800\/50 {
+  background-color: #f1f5f9;
+}
+
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-slate-300 {
+  color: #0f172a;
+}
+html.light .text-slate-400 {
+  color: #475569;
+}
+html.light .text-slate-500,
+html.light .text-slate-600 {
+  color: #64748b;
+}
+html.light .hover\:text-white:hover {
+  color: #0f172a;
+}
+
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-700 {
+  border-color: #e2e8f0;
+}
+
+html.light .glass-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+html.light .glass-nav {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+html.light input::placeholder {
+  color: #94a3b8;
+}
+
+/* Light-mode: header/chat/search surfaces and translucent slates */
+html.light .bg-slate-900\/50,
+html.light .bg-slate-900\/40,
+html.light .bg-slate-900\/95,
+html.light .bg-slate-950\/95,
+html.light .bg-slate-950\/80 {
+  background-color: #ffffff;
+}
+html.light #global-header,
+html.light #bottom-nav {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+/* Dynamic Light/Dark Theme Adaptive Icons */
+html.light .icon-adaptive,
+html.light nav button svg,
+html.light header button svg,
+html.light .drawer-menu svg {
+  color: #0f172a;
+}
+
+html:not(.light) .icon-adaptive,
+html:not(.light) nav button svg,
+html:not(.light) header button svg,
+html:not(.light) .drawer-menu svg {
+  color: #ffffff;
+}
+
+/* ============================================================
+   Pure AMOLED black surfaces (dark mode). Every wrapper, header,
+   chat list and nav bar shares the exact same #000000 so there are
+   no visible seams or two-tone bands between sections.
+   ============================================================ */
+html:not(.light) .bg-slate-950,
+html:not(.light) .bg-slate-950\/95,
+html:not(.light) .bg-slate-950\/90,
+html:not(.light) .bg-slate-950\/80,
+html:not(.light) .bg-slate-950\/60,
+html:not(.light) .bg-slate-900,
+html:not(.light) .bg-slate-900\/95,
+html:not(.light) .bg-slate-900\/80,
+html:not(.light) .bg-slate-900\/60,
+html:not(.light) .bg-slate-900\/50,
+html:not(.light) .bg-slate-900\/40 {
+  background-color: #000000;
+}
+html:not(.light) .bg-slate-800,
+html:not(.light) .bg-slate-800\/70,
+html:not(.light) .bg-slate-800\/60,
+html:not(.light) .bg-slate-800\/50 {
+  background-color: #111111;
+}
+html:not(.light) #global-header,
+html:not(.light) #bottom-nav,
+html:not(.light) #main-viewport,
+html:not(.light) #chat-view {
+  background-color: #000000;
+}
+html:not(.light) .glass-card {
+  background: #000000;
+  border-color: #262626;
+}
+html:not(.light) .border-slate-800,
+html:not(.light) .border-slate-800\/80,
+html:not(.light) .border-slate-700 {
+  border-color: #262626;
+}
+
+/* Instagram-style floating watermark used on exported/preview videos */
+@keyframes floatWatermark {
+  0%,
+  20% {
+    transform: translate(0, 0);
+  }
+  25%,
+  45% {
+    transform: translate(0, calc(-100% + 4px));
+  }
+  50%,
+  70% {
+    transform: translate(calc(-100% + 4px), calc(-100% + 4px));
+  }
+  75%,
+  95% {
+    transform: translate(calc(-100% + 4px), 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.animate-float-watermark {
+  animation: floatWatermark 16s ease-in-out infinite;
+}
+
+/* ---------- Light mode surfaces & contrast ---------- */
+html.light body {
+  background: #ffffff;
+  color: #0f172a;
+}
+html.light .sheet-surface {
+  background: #ffffff;
+}
+
+/* ---------- Reels immersive theme (always AMOLED black) ---------- */
+html.reels-active,
+html.reels-active body {
+  background: #000000 !important;
+}
+html.reels-active #reels-container,
+html.reels-active #bottom-nav {
+  background: #000000 !important;
+}
+html.reels-active #bottom-nav button,
+html.reels-active #bottom-nav svg {
+  color: #ffffff;
+}
+
+/* ---------- 60fps scrolling / GPU hints ---------- */
+#posts-container,
+#reels-container,
+#feed-reels-carousel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+#posts-container video,
+#reels-container video {
+  will-change: transform;
+  contain: content;
+}
+@media (prefers-reduced-motion: no-preference) {
+  #main-viewport {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ============================================================
+   Floating / multi-window (WebToNative APK) support
+   ============================================================ */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  overscroll-behavior-y: contain;
+}
+
+/* Vertical pan only on the main scroll surfaces so Android's floating
+   window drag handles never fight the app's own gestures. */
+#main-viewport,
+#posts-container,
+#chat-view,
+#reels-container > div {
+  touch-action: pan-y;
+}
+#feed-reels-carousel {
+  touch-action: pan-x;
+}
+
+/* Never allow a second horizontal scrollbar inside a shrunken WebView. */
+#main-viewport,
+#main-viewport > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Media always scales to the available width in resized popups. */
+#main-viewport img,
+#main-viewport video,
+#reels-container video {
+  max-width: 100%;
+}
+
+/* Narrow floating window: shrink chrome, text and controls fluidly. */
+@media (max-width: 360px) {
+  html {
+    font-size: 14px;
+  }
+  #global-header,
+  #bottom-nav {
+    height: 2.5rem;
+  }
+  #bottom-nav svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+}
+
+/* Short floating window: trim vertical chrome so content still fits. */
+@media (max-height: 500px) {
+  #global-header {
+    height: 2.25rem;
+  }
+  #bottom-nav {
+    height: 2.25rem;
+  }
+  #reels-container {
+    height: 100dvh;
+  }
+}
+
+/* ============================================================
+   In-video color-cycling floating watermark (Reels)
+   ============================================================ */
+@keyframes watermarkFloat {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(6%, -38%);
+  }
+  50% {
+    transform: translate(-4%, -72%);
+  }
+  75% {
+    transform: translate(8%, -34%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.animate-watermark-float {
+  animation: watermarkFloat 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes colorCycle {
+  0% {
+    color: #ff2d55;
+    text-shadow: 0 0 10px rgba(255, 45, 85, 0.85);
+  }
+  25% {
+    color: #24ff7a;
+    text-shadow: 0 0 10px rgba(36, 255, 122, 0.85);
+  }
+  50% {
+    color: #22e0ff;
+    text-shadow: 0 0 10px rgba(34, 224, 255, 0.85);
+  }
+  75% {
+    color: #ffd429;
+    text-shadow: 0 0 10px rgba(255, 212, 41, 0.85);
+  }
+  100% {
+    color: #ff2d55;
+    text-shadow: 0 0 10px rgba(255, 45, 85, 0.85);
+  }
+}
+.animate-color-cycle {
+  animation: colorCycle 6s linear infinite;
+}
+
+/* ---------- HD gradient double-tap heart (Reels only) ---------- */
+@keyframes floatingHeart {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50%, -55%) scale(1.25);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(-50%, -60%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -130%) scale(0.9);
+    opacity: 0;
+  }
+}
+.floating-heart-animation {
+  animation: floatingHeart 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  filter: drop-shadow(0 0 16px rgba(255, 0, 85, 0.75));
+  pointer-events: none;
+}
+
+/* Reels bottom sheets: force AMOLED black surfaces + white text */
+html.reels-active .sheet-surface,
+html.reels-active .reels-sheet {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+html.reels-active .reels-sheet *,
+html.reels-active .reels-sheet svg {
+  color: #ffffff;
+}
+html.reels-active .reels-sheet input,
+html.reels-active .reels-sheet textarea {
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* Instagram-style clean view: touch-and-hold hides every overlay chrome. */
+#bottom-nav {
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease;
+}
+html.clean-view #bottom-nav {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Full-screen camera hides the app navigation entirely. */
+html.camera-active #bottom-nav,
+html.camera-active #global-header {
+  display: none !important;
+}

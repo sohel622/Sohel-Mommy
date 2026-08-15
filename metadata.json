@@ -1,0 +1,6 @@
+{
+  "name": "Pixelgram",
+  "description": "An Instagram-inspired social media web application with feed, stories, reels, chats, and profiles.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
